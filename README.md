@@ -212,10 +212,12 @@ Translations of the guide are available in the following languages:
 
     # good
     def send_mail(source)
-      Mailer.deliver(to: 'bob@example.com',
-                     from: 'us@example.com',
-                     subject: 'Important message',
-                     body: source.text)
+      Mailer.deliver(
+        to: 'bob@example.com',
+        from: 'us@example.com',
+        subject: 'Important message',
+        body: source.text
+      )
     end
     ```
 
@@ -236,15 +238,14 @@ Translations of the guide are available in the following languages:
 
 ## Syntax
 
-* Use `def` with parentheses when there are arguments. Omit the
-  parentheses when the method doesn't accept any arguments.
+* Omit parentheses in `def`s, unless absolutely required such as in Ruby 2's named parameters.
 
      ```Ruby
      def some_method
        # body omitted
      end
 
-     def some_method_with_arguments(arg1, arg2)
+     def some_method_with_arguments arg1, arg2
        # body omitted
      end
      ```
@@ -281,15 +282,18 @@ Translations of the guide are available in the following languages:
     end
     ```
 
-* Favor the ternary operator(`?:`) over `if/then/else/end` constructs.
-  It's more common and obviously more concise.
+* Only use the ternary operator(`?:`) for extremely simple logic operations.
+  Never use multi-lines ternaries.
 
     ```Ruby
-    # bad
-    result = if some_condition then something else something_else end
-
-    # good
+    # good for simple operations
     result = some_condition ? something : something_else
+    
+    # bad
+    result = (some_condition && other_condition && (this || that) ?
+      something : 
+      something_else(foo: bar, baz: bif)
+
     ```
 
 * Use one expression per branch in a ternary operator. This
